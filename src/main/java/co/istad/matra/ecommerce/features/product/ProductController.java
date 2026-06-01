@@ -1,10 +1,10 @@
-package co.istad.matra.ecommerce.controller;
+package co.istad.matra.ecommerce.features.product;
 
-import co.istad.matra.ecommerce.dto.CreateProductRequest;
-import co.istad.matra.ecommerce.dto.PatchProductRequest;
-import co.istad.matra.ecommerce.dto.ProductResponse;
-import co.istad.matra.ecommerce.dto.UpdateProductRequest;
-import co.istad.matra.ecommerce.service.ProductService;
+import co.istad.matra.ecommerce.features.product.dto.CreateProductRequest;
+import co.istad.matra.ecommerce.features.product.dto.PatchProductRequest;
+import co.istad.matra.ecommerce.features.product.dto.ProductResponse;
+import co.istad.matra.ecommerce.features.product.dto.UpdateProductRequest;
+import co.istad.matra.ecommerce.features.product.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,5 +1,7 @@
-package co.istad.matra.ecommerce.domain;
+package co.istad.matra.ecommerce.features.product;
 
+import co.istad.matra.ecommerce.features.category.Category;
+import co.istad.matra.ecommerce.features.order.OrderLine;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

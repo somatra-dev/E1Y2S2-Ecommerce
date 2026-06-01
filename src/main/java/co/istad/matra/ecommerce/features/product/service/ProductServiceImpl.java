@@ -1,14 +1,14 @@
-package co.istad.matra.ecommerce.service;
+package co.istad.matra.ecommerce.features.product.service;
 
-import co.istad.matra.ecommerce.domain.Category;
-import co.istad.matra.ecommerce.domain.Product;
-import co.istad.matra.ecommerce.dto.CreateProductRequest;
-import co.istad.matra.ecommerce.dto.PatchProductRequest;
-import co.istad.matra.ecommerce.dto.ProductResponse;
-import co.istad.matra.ecommerce.dto.UpdateProductRequest;
-import co.istad.matra.ecommerce.mapper.ProductMapper;
-import co.istad.matra.ecommerce.repository.CategoryRepository;
-import co.istad.matra.ecommerce.repository.ProductRepository;
+import co.istad.matra.ecommerce.features.category.Category;
+import co.istad.matra.ecommerce.features.product.Product;
+import co.istad.matra.ecommerce.features.product.dto.CreateProductRequest;
+import co.istad.matra.ecommerce.features.product.dto.PatchProductRequest;
+import co.istad.matra.ecommerce.features.product.dto.ProductResponse;
+import co.istad.matra.ecommerce.features.product.dto.UpdateProductRequest;
+import co.istad.matra.ecommerce.features.product.mapper.ProductMapper;
+import co.istad.matra.ecommerce.features.category.CategoryRepository;
+import co.istad.matra.ecommerce.features.product.ProductRepository;
 import co.istad.matra.ecommerce.util.GenerateUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

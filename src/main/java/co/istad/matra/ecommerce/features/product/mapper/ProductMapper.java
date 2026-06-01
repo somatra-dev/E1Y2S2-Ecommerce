@@ -1,9 +1,9 @@
-package co.istad.matra.ecommerce.mapper;
+package co.istad.matra.ecommerce.features.product.mapper;
 
-import co.istad.matra.ecommerce.domain.Product;
-import co.istad.matra.ecommerce.dto.PatchProductRequest;
-import co.istad.matra.ecommerce.dto.ProductResponse;
-import co.istad.matra.ecommerce.dto.UpdateProductRequest;
+import co.istad.matra.ecommerce.features.product.Product;
+import co.istad.matra.ecommerce.features.product.dto.PatchProductRequest;
+import co.istad.matra.ecommerce.features.product.dto.ProductResponse;
+import co.istad.matra.ecommerce.features.product.dto.UpdateProductRequest;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")

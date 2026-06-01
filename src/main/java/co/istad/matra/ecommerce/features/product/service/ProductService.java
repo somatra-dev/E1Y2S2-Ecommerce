@@ -1,9 +1,9 @@
-package co.istad.matra.ecommerce.service;
+package co.istad.matra.ecommerce.features.product.service;
 
-import co.istad.matra.ecommerce.dto.CreateProductRequest;
-import co.istad.matra.ecommerce.dto.PatchProductRequest;
-import co.istad.matra.ecommerce.dto.ProductResponse;
-import co.istad.matra.ecommerce.dto.UpdateProductRequest;
+import co.istad.matra.ecommerce.features.product.dto.CreateProductRequest;
+import co.istad.matra.ecommerce.features.product.dto.PatchProductRequest;
+import co.istad.matra.ecommerce.features.product.dto.ProductResponse;
+import co.istad.matra.ecommerce.features.product.dto.UpdateProductRequest;
 import org.springframework.data.domain.Page;
 
 public interface ProductService {

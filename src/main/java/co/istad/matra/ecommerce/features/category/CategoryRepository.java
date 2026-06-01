@@ -1,6 +1,5 @@
-package co.istad.matra.ecommerce.repository;
+package co.istad.matra.ecommerce.features.category;
 
-import co.istad.matra.ecommerce.domain.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CategoryRepository

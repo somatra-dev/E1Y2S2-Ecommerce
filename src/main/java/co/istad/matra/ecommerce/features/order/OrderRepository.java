@@ -1,6 +1,5 @@
-package co.istad.matra.ecommerce.repository;
+package co.istad.matra.ecommerce.features.order;
 
-import co.istad.matra.ecommerce.domain.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

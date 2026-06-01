@@ -1,4 +1,4 @@
-package co.istad.matra.ecommerce.dto;
+package co.istad.matra.ecommerce.features.product.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
