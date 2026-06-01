@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres:17.5-bullseye
+    container_name: ec_db
+    environment:
+      POSTGRES_DB: ec_db
+      POSTGRES_USER: ec
+      POSTGRES_PASSWORD: qwer
+    ports:
+      - 4444:5432
+    volumes:
+      - ec_db:/var/lib/postgresql/data
+volumes:
+  ec_db:
