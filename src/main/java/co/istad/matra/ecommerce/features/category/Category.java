@@ -22,7 +22,10 @@ public class Category {
     private Integer id;
 
     @Column(nullable = false, length = 50, unique = true)
-    private String name; // Default String = 255 characters
+    private String name;
+
+    private String description;
+    private String categoryIcon;
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;

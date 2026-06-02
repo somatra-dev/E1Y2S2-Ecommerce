@@ -1,7 +1,7 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop # create, drop, alter, truncate
+      ddl-auto: update # create, drop, alter, truncate
     show-sql: true
     properties:
       hibernate:
@@ -21,3 +21,5 @@ spring:
           issuer-uri: http://localhost:9090/realms/istad
 
 kind: Application
+server:
+  port: 9999
