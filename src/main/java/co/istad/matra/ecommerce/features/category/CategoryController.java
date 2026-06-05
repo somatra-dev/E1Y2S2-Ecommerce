@@ -42,7 +42,7 @@ public class CategoryController {
         return categoryService.findById(id);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public CategoryResponse update(@PathVariable Integer id, @Valid @RequestBody UpdateCategoryRequest updateCategoryRequest){
         return categoryService.update(id, updateCategoryRequest);
