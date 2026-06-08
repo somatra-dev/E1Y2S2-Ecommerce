@@ -9,8 +9,8 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:4444/ec_db
-    username: ec
-    password: qwer
+    username: ${DB_USERNAME:ec}
+    password: ${DB_PASSWORD:qwer}
   application:
     name: ecommerce-api
 

@@ -52,4 +52,28 @@ public class AppGlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, e.getStatusCode());
     }
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponse handleResourceNotFoundException(ResourceNotFoundException e) {
+        return ErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND.getReasonPhrase())
+                .code(HttpStatus.NOT_FOUND.value())
+                .message(e.getMessage())
+                .timestamp(Instant.now())
+                .errorDetails(e.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(ResourceConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleResourceConflictException(ResourceConflictException e) {
+        return ErrorResponse.builder()
+                .status(HttpStatus.CONFLICT.getReasonPhrase())
+                .code(HttpStatus.CONFLICT.value())
+                .message(e.getMessage())
+                .timestamp(Instant.now())
+                .errorDetails(e.getMessage())
+                .build();
+    }
+
 }

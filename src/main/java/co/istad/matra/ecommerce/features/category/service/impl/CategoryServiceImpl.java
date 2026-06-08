@@ -29,15 +29,13 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
 
-
     @Override
     public CategoryResponse create(CreateCategoryRequest createCategoryRequest) {
 
-        if(categoryRepository.existsCategoriesByName(createCategoryRequest.name())){
+        if (categoryRepository.existsCategoriesByName(createCategoryRequest.name())) {
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT,
-                    "Category Name already exist"
-            );
+                    "Category Name already exist");
         }
         log.info("Category inserting...!");
         Category category = categoryMapper
@@ -59,7 +57,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponse findById(Integer categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Category with id %d not found", categoryId)));
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("Category with id %d not found", categoryId)));
 
         return categoryMapper.mapCategoryToCategoryResponse(category);
     }
@@ -68,7 +67,8 @@ public class CategoryServiceImpl implements CategoryService {
     public void delete(Integer categoryId) {
 
         if (!categoryRepository.existsById(categoryId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Category with id %d not found", categoryId));
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("Category with id %d not found", categoryId));
         }
         categoryRepository.deleteById(categoryId);
 
@@ -77,16 +77,21 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponse update(Integer categoryId, UpdateCategoryRequest updateCategoryRequest) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Category with id %d not found", categoryId)));
-
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        String.format("Category with id %d not found", categoryId)));
         if (updateCategoryRequest.name() != null && !updateCategoryRequest.name().trim().isEmpty()) {
             if (categoryRepository.existsCategoriesByName(updateCategoryRequest.name()) &&
                     !category.getName().equalsIgnoreCase(updateCategoryRequest.name())) {
                 throw new ResponseStatusException(HttpStatus.CONFLICT, "Category name already exists");
             }
+            category.setName(updateCategoryRequest.name());
         }
-
-        categoryMapper.mapUpdateCategoryRequestToCategory(updateCategoryRequest, category);
+        if (updateCategoryRequest.description() != null && !updateCategoryRequest.description().isEmpty()) {
+            category.setDescription(updateCategoryRequest.description());
+        }
+        if (updateCategoryRequest.categoryIcon() != null && !updateCategoryRequest.categoryIcon().isEmpty()) {
+            category.setCategoryIcon(updateCategoryRequest.categoryIcon());
+        }
 
         return categoryMapper.mapCategoryToCategoryResponse(categoryRepository.save(category));
     }

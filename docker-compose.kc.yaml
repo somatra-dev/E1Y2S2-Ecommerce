@@ -1,0 +1,45 @@
+services:
+  db-kcpg:
+    image: postgres:17.5-bullseye
+    container_name: db-kcpg
+    environment:
+      POSTGRES_DB: db_keycloak
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwer
+    ports:
+      - 5400:5432
+    volumes:
+      - postgres_vol:/var/lib/postgresql/data
+
+  kc:
+    image: quay.io/keycloak/keycloak:26.6.3
+    container_name: kc
+    depends_on:
+      - db-kcpg
+    environment:
+      # Database Configuration
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db-kcpg:5432/db_keycloak
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: qwer
+
+      # Admin User # Temporary admin
+      KC_BOOTSTRAP_ADMIN_USERNAME: kc
+      KC_BOOTSTRAP_ADMIN_PASSWORD: qwer
+
+      # Production Settings
+      KC_HOSTNAME: localhost
+      KC_HOSTNAME_PORT: 9090
+      KC_HOSTNAME_STRICT: false
+      KC_HOSTNAME_STRICT_HTTPS: false
+    ports:
+      - "9090:8080"
+      - "8443:8443"
+    volumes:
+      - ./keycloak/conf:/opt/keycloak/conf
+      - ./keycloak/data:/opt/keycloak/data
+    command:
+      - start-dev
+
+volumes:
+  postgres_vol:

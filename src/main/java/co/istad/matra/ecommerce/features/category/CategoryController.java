@@ -1,6 +1,5 @@
 package co.istad.matra.ecommerce.features.category;
 
-
 import co.istad.matra.ecommerce.features.category.dto.CategoryResponse;
 import co.istad.matra.ecommerce.features.category.dto.CreateCategoryRequest;
 import co.istad.matra.ecommerce.features.category.dto.UpdateCategoryRequest;
@@ -24,7 +23,7 @@ public class CategoryController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CategoryResponse create(
-            @Valid @RequestBody CreateCategoryRequest createCategoryRequest){
+            @Valid @RequestBody CreateCategoryRequest createCategoryRequest) {
         return categoryService.create(createCategoryRequest);
     }
 
@@ -32,25 +31,24 @@ public class CategoryController {
     @ResponseStatus(HttpStatus.OK)
     public Page<CategoryResponse> findAll(
             @RequestParam(required = false, defaultValue = "0") int pageNumber,
-            @RequestParam(required = false, defaultValue = "10") int pageSize
-    ){
+            @RequestParam(required = false, defaultValue = "10") int pageSize) {
         return categoryService.findAll(pageNumber, pageSize);
     }
 
     @GetMapping("/{id}")
-    public CategoryResponse findById(@PathVariable Integer id){
+    public CategoryResponse findById(@PathVariable Integer id) {
         return categoryService.findById(id);
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryResponse update(@PathVariable Integer id, @Valid @RequestBody UpdateCategoryRequest updateCategoryRequest){
+    public CategoryResponse update(@PathVariable Integer id,
+            @Valid @RequestBody UpdateCategoryRequest updateCategoryRequest) {
         return categoryService.update(id, updateCategoryRequest);
     }
 
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("{id}")
-    public void delete(@PathVariable Integer id){
+    public void delete(@PathVariable Integer id) {
         categoryService.delete(id);
     }
 

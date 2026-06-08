@@ -1,6 +1,7 @@
 package co.istad.matra.ecommerce.features.product.mapper;
 
 import co.istad.matra.ecommerce.features.product.Product;
+import co.istad.matra.ecommerce.features.product.dto.CreateProductRequest;
 import co.istad.matra.ecommerce.features.product.dto.PatchProductRequest;
 import co.istad.matra.ecommerce.features.product.dto.ProductResponse;
 import co.istad.matra.ecommerce.features.product.dto.UpdateProductRequest;
@@ -11,6 +12,12 @@ public interface ProductMapper {
 
     @Mapping(source = "category.name", target = "categoryName")
     ProductResponse productToProductResponse(Product product);
+
+    @Mapping(target = "category", ignore = true)
+    @Mapping(target = "code", ignore = true)
+    @Mapping(target = "isAvailable", ignore = true)
+    @Mapping(target = "orderLines", ignore = true)
+    Product createProductRequestToProduct(CreateProductRequest createProductRequest);
 
     void updateProductRequestToProduct(UpdateProductRequest updateProductRequest,
                                        @MappingTarget Product product);
