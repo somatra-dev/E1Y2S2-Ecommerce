@@ -20,6 +20,10 @@ spring:
         jwt:
           issuer-uri: http://localhost:9090/realms/istad
 
+file-upload:
+  server-path: D:\Bchelor\backend\upload\
+
+
 kind: Application
 server:
   port: 9999

@@ -10,8 +10,11 @@ import co.istad.matra.ecommerce.features.order.mapper.OrderMapper;
 import co.istad.matra.ecommerce.features.order.service.OrderService;
 import co.istad.matra.ecommerce.features.product.Product;
 import co.istad.matra.ecommerce.features.product.ProductRepository;
+import co.istad.matra.ecommerce.security.AuthUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +32,8 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
 
     @Override
-    public OrderResponse createOrder(CreateOrderRequest request, Jwt jwt) {
+    public OrderResponse createOrder(CreateOrderRequest request) {
+
 
         List<OrderLine> validOrderLine = new ArrayList<>();
 
@@ -58,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderMapper.mapOrderRequestToOrder(request);
         order.setOrderedAt(Instant.now());
         order.setIsDeleted(false);
-        order.setOrderedBy(jwt.getClaimAsString("preferred_username"));
+        order.setOrderedBy(AuthUtils.extractUserId());
 
         order.setOrderLines(validOrderLine);
 
