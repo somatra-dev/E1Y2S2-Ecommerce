@@ -28,6 +28,7 @@ spring:
 file-upload:
   client-path: /file
   server-path: D:\Bchelor\backend\upload\
+  base-uri: http://localhost:${server.port}${file-upload.client-path}
 
 
 kind: Application

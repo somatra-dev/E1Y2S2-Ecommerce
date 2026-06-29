@@ -3,12 +3,11 @@ package co.istad.matra.ecommerce.features.file;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.MediaTypeFactory;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +17,15 @@ public class FileUploadController {
     private final FileUploadService fileUploadService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public FileResponse upload(@RequestPart MultipartFile file){
         return fileUploadService.uploadFile(file);
+    }
+
+    @PostMapping("/multiple")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<FileResponse> uploadMultiple(@RequestPart List<MultipartFile> files){
+        return fileUploadService.uploadMultiple(files);
     }
 
     @GetMapping("/{fileName}")

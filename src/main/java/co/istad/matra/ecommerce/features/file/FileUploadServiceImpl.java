@@ -16,8 +16,10 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -31,6 +33,35 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     @Override
     public FileResponse uploadFile(MultipartFile file) {
+
+        return saveFile(file);
+    }
+
+    @Override
+    public List<FileResponse> uploadMultiple(List<MultipartFile> files) {
+
+        return files.stream()
+                .map(this::saveFile)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Resource loadFile(String fileName) {
+        try {
+            Path filePath = Paths.get(serverPath).resolve(fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists() && resource.isReadable()) {
+                return resource;
+            } else {
+                throw new RuntimeException("File not found or is not readable: " + fileName);
+            }
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Invalid file path: " + fileName, e);
+        }
+    }
+
+
+    private FileResponse saveFile(MultipartFile file){
         if (file.isEmpty()) {
             throw new IllegalArgumentException("File cannot be empty");
         }
@@ -74,20 +105,5 @@ public class FileUploadServiceImpl implements FileUploadService {
                 .mediaType(file.getContentType())
                 .uri(uri)
                 .build();
-    }
-
-    @Override
-    public Resource loadFile(String fileName) {
-        try {
-            Path filePath = Paths.get(serverPath).resolve(fileName).normalize();
-            Resource resource = new UrlResource(filePath.toUri());
-            if (resource.exists() && resource.isReadable()) {
-                return resource;
-            } else {
-                throw new RuntimeException("File not found or is not readable: " + fileName);
-            }
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("Invalid file path: " + fileName, e);
-        }
     }
 }
