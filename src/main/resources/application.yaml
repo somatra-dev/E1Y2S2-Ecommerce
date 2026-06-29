@@ -20,7 +20,13 @@ spring:
         jwt:
           issuer-uri: http://localhost:9090/realms/istad
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
 file-upload:
+  client-path: /file
   server-path: D:\Bchelor\backend\upload\
 
 

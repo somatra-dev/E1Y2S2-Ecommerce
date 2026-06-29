@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 public class SecurityConfig {
 
 
-
     @Bean
     public SecurityFilterChain apiSecurity(HttpSecurity http) {
         // TODO: define your security configuration
@@ -43,6 +42,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/v1/categories/**").permitAll()
                 .requestMatchers("/scalar", "/v3/api/**").permitAll()
                 .requestMatchers("/api/v1/files/**").permitAll()
+                .requestMatchers("/file/**").permitAll()
                 .anyRequest().authenticated()
         );
 

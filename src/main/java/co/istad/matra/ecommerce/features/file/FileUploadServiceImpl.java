@@ -53,7 +53,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         }
 
         String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/api/v1/files/")
+                .path("/file/")
                 .path(savedFileName)
                 .toUriString();
 
