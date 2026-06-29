@@ -24,6 +24,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FileUploadServiceImpl implements FileUploadService {
 
+    private final FileRepository fileRepository;
+
     @Value("${file-upload.server-path}")
     private String serverPath;
 
@@ -56,6 +58,15 @@ public class FileUploadServiceImpl implements FileUploadService {
                 .path("/file/")
                 .path(savedFileName)
                 .toUriString();
+
+        FileUpload fileUpload = new FileUpload();
+        fileUpload.setName(fileName);
+        fileUpload.setExtension(fileExs);
+        fileUpload.setMediaType(file.getContentType());
+        fileUpload.setSize(file.getSize());
+
+        // save to db
+        fileRepository.save(fileUpload);
 
         return FileResponse.builder()
                 .name(savedFileName)
