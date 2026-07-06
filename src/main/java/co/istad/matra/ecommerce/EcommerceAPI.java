@@ -2,6 +2,7 @@ package co.istad.matra.ecommerce;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 
 // Structure project
@@ -9,6 +10,7 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 // 2. Structure by features
 @SpringBootApplication
 @EnableSpringDataWebSupport(pageSerializationMode = EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO)
+@EnableConfigurationProperties
 public class EcommerceAPI {
 
 	public static void main(String[] args) {

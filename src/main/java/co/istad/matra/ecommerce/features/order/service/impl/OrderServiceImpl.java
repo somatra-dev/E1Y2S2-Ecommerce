@@ -10,12 +10,9 @@ import co.istad.matra.ecommerce.features.order.mapper.OrderMapper;
 import co.istad.matra.ecommerce.features.order.service.OrderService;
 import co.istad.matra.ecommerce.features.product.Product;
 import co.istad.matra.ecommerce.features.product.ProductRepository;
-import co.istad.matra.ecommerce.security.AuthUtils;
+import co.istad.matra.ecommerce.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -62,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderMapper.mapOrderRequestToOrder(request);
         order.setOrderedAt(Instant.now());
         order.setIsDeleted(false);
-        order.setOrderedBy(AuthUtils.extractUserId());
+        order.setOrderedBy(AuthUtil.extractUserId());
 
         order.setOrderLines(validOrderLine);
 

@@ -1,4 +1,4 @@
-package co.istad.matra.ecommerce.security;
+package co.istad.matra.ecommerce.util;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -10,9 +10,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Objects;
 
-public final class AuthUtils {
+public final class AuthUtil {
 
-    private AuthUtils() {}
+    private AuthUtil() {}
 
     public static String extractUserId() {
         Authentication auth = getAuth();

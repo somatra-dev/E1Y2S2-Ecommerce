@@ -1,3 +1,19 @@
+keycloak:
+  server-url: http://localhost:9090
+  realm: istad
+  client-id: e1-springboot-client
+  client-secret: oERBRwxSwyQBUjtNCbWqPsmlx2ybepdw
+  grant-type: client_credentials
+
+file-upload:
+  client-path: /file
+  server-path: D:\Bchelor\backend\upload\
+  base-uri: http://localhost:${server.port}${file-upload.client-path}
+
+
+server:
+  port: 9999
+
 spring:
   jpa:
     hibernate:
@@ -25,12 +41,4 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
 
-file-upload:
-  client-path: /file
-  server-path: D:\Bchelor\backend\upload\
-  base-uri: http://localhost:${server.port}${file-upload.client-path}
 
-
-kind: Application
-server:
-  port: 9999
