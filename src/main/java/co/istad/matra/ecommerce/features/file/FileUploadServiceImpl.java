@@ -6,8 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.File;
@@ -18,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -27,9 +34,17 @@ import java.util.stream.Collectors;
 public class FileUploadServiceImpl implements FileUploadService {
 
     private final FileRepository fileRepository;
+    private final FileMapper fileMapper;
 
     @Value("${file-upload.server-path}")
     private String serverPath;
+
+    private String extractBaseName(String name) {
+        if (name != null && name.contains(".")) {
+            return name.substring(0, name.lastIndexOf("."));
+        }
+        return name;
+    }
 
     @Override
     public FileResponse uploadFile(MultipartFile file) {
@@ -43,6 +58,45 @@ public class FileUploadServiceImpl implements FileUploadService {
         return files.stream()
                 .map(this::saveFile)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<FileResponse> findAll(int pageNumber, int pageSize) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        Page<FileUpload> fileUploads = fileRepository.findAll(pageable);
+        return fileUploads.map(fileMapper::mapFromFileUploadToFileResponse);
+    }
+
+    @Override
+    public FileResponse findByName(String name) {
+        String baseName = extractBaseName(name);
+        FileUpload fileUpload = fileRepository.findByName(baseName)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "File not found"
+                ));
+        return fileMapper.mapFromFileUploadToFileResponse(fileUpload);
+    }
+
+    @Override
+    public void deleteByName(String name) {
+        String baseName = extractBaseName(name);
+        FileUpload fileUpload = fileRepository.findByName(baseName)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "File not found"
+                ));
+
+        try {
+            String savedFileName = fileUpload.getName() + "." + fileUpload.getExtension();
+            Path path = Paths.get(serverPath, savedFileName);
+            Files.deleteIfExists(path);
+        } catch (IOException e) {
+            throw new RuntimeException("Could not delete file: " + e.getMessage(), e);
+        }
+
+        fileRepository.delete(fileUpload);
     }
 
     @Override

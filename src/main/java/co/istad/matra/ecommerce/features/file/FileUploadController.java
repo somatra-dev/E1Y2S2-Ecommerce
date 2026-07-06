@@ -3,6 +3,7 @@ package co.istad.matra.ecommerce.features.file;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,5 +38,23 @@ public class FileUploadController {
                 .contentType(mediaType)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
+    }
+
+    @GetMapping
+    public Page<FileResponse> findAll(
+            @RequestParam(required = false, defaultValue = "0") int pageNumber,
+            @RequestParam(required = false, defaultValue = "10") int pageSize) {
+        return fileUploadService.findAll(pageNumber, pageSize);
+    }
+
+    @GetMapping("/{name}/info")
+    public FileResponse findByName(@PathVariable String name) {
+        return fileUploadService.findByName(name);
+    }
+
+    @DeleteMapping("/{name}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteByName(@PathVariable String name) {
+        fileUploadService.deleteByName(name);
     }
 }
