@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .requestMatchers("/scalar", "/v3/api/**").permitAll()
                 .requestMatchers("/api/v1/files/**").permitAll()
                 .requestMatchers("/file/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
         );
 
         // 4. Disable CSRF token

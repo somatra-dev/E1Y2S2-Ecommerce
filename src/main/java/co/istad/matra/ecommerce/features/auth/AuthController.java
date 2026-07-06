@@ -3,22 +3,24 @@ package co.istad.matra.ecommerce.features.auth;
 
 import co.istad.matra.ecommerce.features.auth.dto.RegisterResponse;
 import co.istad.matra.ecommerce.features.auth.dto.UserRegisterRequest;
+import co.istad.matra.ecommerce.features.auth.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
+    private final AuthService authService;
+
     @PostMapping("/register")
+    @ResponseStatus(HttpStatus.CREATED)
     public RegisterResponse register(@Valid @RequestBody UserRegisterRequest userRegisterRequest){
 
-        return null;
+        return authService.register(userRegisterRequest);
     }
 
 }
