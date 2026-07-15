@@ -24,9 +24,9 @@ spring:
         format_sql: true
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:4444/ec_db
-    username: ${DB_USERNAME:ec}
-    password: ${DB_PASSWORD:qwer}
+    url: jdbc:postgresql://localhost:9432/postgres
+    username: ${DB_USERNAME:e1usr}
+    password: ${DB_PASSWORD:qwerqwer}
   application:
     name: ecommerce-api
 

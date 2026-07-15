@@ -1,14 +1,19 @@
-services:
-  db:
-    image: postgres:17.5-bullseye
-    container_name: ec_db
-    environment:
-      POSTGRES_DB: ec_db
-      POSTGRES_USER: ec
-      POSTGRES_PASSWORD: qwer
-    ports:
-      - 4444:5432
-    volumes:
-      - ec_db:/var/lib/postgresql/data
+networks:
+  e1-net:
+    external: true
 volumes:
-  ec_db:
+  ecommerce-db-e1-vol:
+services:
+  ecommerce-db-e1:
+    image: postgres:18.4
+    container_name: ecommerce-db-e1
+    ports:
+      - "9432:5432"
+    environment:
+      POSTGRES_PASSWORD: qwerqwer
+      POSTGRES_USER: e1usr
+    volumes:
+      - "../init_scripts:/docker-entrypoint-initdb.d"
+      - "ecommerce-db-e1-vol:/var/lib/postgresql/18/docker"
+    networks:
+      - e1-net
