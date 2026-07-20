@@ -13,7 +13,7 @@ services:
       POSTGRES_PASSWORD: qwerqwer
       POSTGRES_USER: e1usr
     volumes:
-      - "../init_scripts:/docker-entrypoint-initdb.d"
-      - "ecommerce-db-e1-vol:/var/lib/postgresql/18/docker"
+      - ./init_scripts:/docker-entrypoint-initdb.d
+      - ecommerce-db-e1-vol:/var/lib/postgresql/18/docker
     networks:
       - e1-net

@@ -10,10 +10,12 @@ services:
       - 5400:5432
     volumes:
       - postgres_vol:/var/lib/postgresql/data
+    networks:
+      - e1-net
 
-  kc:
+  keycloak-e1:
     image: quay.io/keycloak/keycloak:26.6.3
-    container_name: kc
+    container_name: keycloak-e1
     depends_on:
       - db-kcpg
     environment:
@@ -38,8 +40,13 @@ services:
     volumes:
       - ./keycloak/conf:/opt/keycloak/conf
       - ./keycloak/data:/opt/keycloak/data
+    networks:
+      - e1-net
     command:
       - start-dev
 
 volumes:
   postgres_vol:
+networks:
+  e1-net:
+    external: true
